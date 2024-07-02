@@ -1,3 +1,14 @@
+This is an API that can simulate several scenarios in the FPX UI.
+
+It will create a bunch of routes, and then execute several requests that stress test the FPX ui a little.
+
+To generate request data, run `npm run dev:ping`
+
+You might need to configure this to connect to your own neon database. Feel free to remove or modify the `.neon` file.
+
+
+## Basics
+
 ```
 npm install
 npm run dev
