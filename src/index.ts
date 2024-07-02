@@ -33,21 +33,6 @@ app.get('/json', (c) => {
 })
 
 /**
- * Long html response
- * - many fetches
- */
-app.get('/html/long', async (c) => {
-
-  let response: ReturnType<typeof fetch> | undefined;
-  for (let i = 1; i <= 15; i++) {
-    response = fetch("http://localhost:8788")
-  }
-
-  return c.html(await response?.then(r => r.text()) ?? "<p>Hi</p>")
-})
-
-
-/**
  * API call to Neon - select all users
  */
 app.get('/db/select', async (c) => {
@@ -98,7 +83,7 @@ app.get('/fetch/sequential', async (c) => {
  * - Fetch to database
  * - Fetch to json placeholder, which then fails due to JSON parse error
  */
-app.get('/fetch/sequential', async (c) => {
+app.get('/fetch/sequential/error', async (c) => {
   const sql = neon(c.env.DATABASE_URL)
   const db = drizzle(sql);
 
@@ -134,5 +119,21 @@ app.get('/fetch/parallel', async (c) => {
     dbUsers,
   })
 })
+
+/**
+ * Many, many fetches to stress test the request details UI
+ */
+app.get('/fetch/sequential/many', async (c) => {
+
+  let response: ReturnType<typeof fetch> | undefined;
+  for (let i = 1; i <= 15; i++) {
+    response = fetch("http://localhost:8788")
+  }
+
+  return c.html(await response?.then(r => r.text()) ?? "<p>Hi</p>")
+})
+
+// TODO - Many, many logs
+
 
 export default app
