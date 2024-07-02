@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { neon } from '@neondatabase/serverless';
+import { createHonoMiddleware } from '@fiberplane/hono';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { users } from './db/schema';
 
@@ -8,6 +9,8 @@ type Bindings = {
 };
 
 const app = new Hono<{ Bindings: Bindings }>()
+
+app.use('*', createHonoMiddleware(app))
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')
