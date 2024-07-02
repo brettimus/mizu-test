@@ -5,7 +5,9 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx migrate.ts",
-    "db:seed": "tsx seed.ts"
+    "db:seed": "tsx seed.ts",
+    "ping": "tsx ping.ts",
+    "dev:ping": "npm run dev & sleep 5 && npm run ping && pkill -f 'wrangler dev'"
   },
   "dependencies": {
     "@fiberplane/hono": "^0.1.0-beta.1",
