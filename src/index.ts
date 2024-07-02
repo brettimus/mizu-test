@@ -33,6 +33,21 @@ app.get('/json', (c) => {
 })
 
 /**
+ * Long html response
+ * - many fetches
+ */
+app.get('/html/long', async (c) => {
+
+  let response: ReturnType<typeof fetch> | undefined;
+  for (let i = 1; i <= 15; i++) {
+    response = fetch("http://localhost:8788")
+  }
+
+  return c.html(await response?.then(r => r.text()) ?? "<p>Hi</p>")
+})
+
+
+/**
  * API call to Neon - select all users
  */
 app.get('/db/select', async (c) => {
